@@ -1,0 +1,38 @@
+body {
+    font: 14px Georgia, serif;
+    text-align: center;
+}
+
+h1 {
+    font: bold 20px system-ui, Helvetica, Sans-Serif;
+}
+
+input[type="number"] {
+    padding: 10px;
+    color: #999;
+    font: bold 20px system-ui, Helvetica, Sans-Serif;
+    width: 100px;
+    margin: 10px 0;
+}
+
+#randomnumber {
+    font-size: 170px;
+    border: solid 1px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background: #BADA55;
+    padding-bottom: 54px;
+}
+
+#result {
+    margin-top: 20px;
+    border: solid 1px;
+    font: 50px Georgia, serif;
+    word-wrap: break-word;
+}
+
+#countdown {
+    margin-top: 10px;
+    font: 30px Georgia, serif;
+}
