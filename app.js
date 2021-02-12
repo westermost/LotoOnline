@@ -77,7 +77,7 @@ var result = [];
 
     function countDown() {
         if (this.flgStop == false) {
-            var timeleft = 5;
+            var timeleft = $("#timeleft").val();;
             var downloadTimer = setInterval(function() {
                 if (timeleft <= 0 && this.flgStop == false) {
                     clearInterval(downloadTimer);
