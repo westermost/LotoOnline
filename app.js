@@ -7,6 +7,9 @@ var result = [];
 
     $(function() {
         $("#getit").click(function() {
+            // hidden start button
+            $("#getit").attr("hidden",true);
+
             var numLow = $("#lownumber").val();
             var numHigh = $("#highnumber").val();
 
@@ -97,6 +100,7 @@ var result = [];
 
     function stopCountDown() {
         this.flgStop = true;
+        $("#getit").removeAttr('hidden');
     }
 
     function clearScreen() {
