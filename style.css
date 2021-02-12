@@ -15,6 +15,14 @@ input[type="number"] {
     margin: 10px 0;
 }
 
+input[type="findNumber"] {
+    padding: 10px;
+    color: #999;
+    font: bold 20px system-ui, Helvetica, Sans-Serif;
+    width: 100px;
+    margin: 10px 0;
+}
+
 #randomnumber {
     font-size: 170px;
     border: solid 1px;

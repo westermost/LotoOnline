@@ -80,7 +80,7 @@ var result = [];
 
     function countDown() {
         if (this.flgStop == false) {
-            var timeleft = $("#timeleft").val();;
+            var timeleft = $("#timeleft").val();
             var downloadTimer = setInterval(function() {
                 if (timeleft <= 0 && this.flgStop == false) {
                     clearInterval(downloadTimer);
@@ -105,4 +105,21 @@ var result = [];
 
     function clearScreen() {
         location.reload();
+    }
+
+    function checkNumber() {
+        var number = $("#findNumber").val();
+        // $("#textCheckNumber").attr("hidden",true);
+        // $("#textCheckNumberWrong").attr("hidden",true);
+
+        if(inArray(number, this.result))
+        {
+            $(".alert-success").removeAttr('hidden');
+            document.getElementById("textCheckNumber").innerHTML = "Có số" + number;
+        }
+        else
+        {
+            $(".alert-danger").removeAttr('hidden');
+            document.getElementById("textCheckNumberWrong").innerHTML = "Không Có Số" + number;
+        }
     }
