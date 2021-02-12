@@ -98,3 +98,7 @@ var result = [];
     function stopCountDown() {
         this.flgStop = true;
     }
+
+    function clearScreen() {
+        location.reload();
+    }
