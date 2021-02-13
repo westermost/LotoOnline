@@ -115,11 +115,11 @@ var result = [];
         if(inArray(number, this.result))
         {
             $(".alert-success").removeAttr('hidden');
-            document.getElementById("textCheckNumber").innerHTML = "Có số" + number;
+            document.getElementById("textCheckNumber").innerHTML = "Có số " + number;
         }
         else
         {
             $(".alert-danger").removeAttr('hidden');
-            document.getElementById("textCheckNumberWrong").innerHTML = "Không Có Số" + number;
+            document.getElementById("textCheckNumberWrong").innerHTML = "Không Có Số " + number;
         }
     }
