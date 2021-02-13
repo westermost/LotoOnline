@@ -1,5 +1,6 @@
 var result = [];
     var flgStop = false;
+    var numberLeft = 90;
 
     function IsNumeric(n) {
         return !isNaN(n);
@@ -39,7 +40,9 @@ var result = [];
                 msg.rate = 1;
                 window.speechSynthesis.speak(msg);
 
+                numberLeft = numberLeft - 1;
 
+                $("#numberLeft").text("Còn lại: " + numberLeft + " số");
                 $("#randomnumber").text(numRand);
                 $("#result").text(result);
             }
