@@ -43,6 +43,7 @@ var result = [];
                 numberLeft = numberLeft - 1;
 
                 $("#numberLeft").text("Còn lại: " + numberLeft + " số");
+                $("#numberhas").text("Số đã kêu: " + result.length + " số");
                 $("#randomnumber").text(numRand);
                 $("#result").text(result);
             }
