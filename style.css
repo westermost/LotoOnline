@@ -426,6 +426,11 @@ input:checked + .slider:before {
     width: 100%;
 }
 
+.select-styled option {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
 /* Right Panel - Master Board */
 .panel-right {
     display: flex;

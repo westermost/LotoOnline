@@ -59,6 +59,13 @@ function populateVoiceList() {
     var selectedValue = select.value;
     select.innerHTML = '';
     
+    // Add Google Translate Online Voice
+    var googleOption = document.createElement('option');
+    googleOption.textContent = 'Google Dịch (Giọng Tiếng Việt Online - Khuyên dùng)';
+    googleOption.value = 'google-tts-vi';
+    googleOption.setAttribute('data-voice-name', 'Google TTS');
+    select.appendChild(googleOption);
+    
     // Sort: Vietnamese first, then English, then others
     var viVoices = voices.filter(function(v) { return v.lang.includes('vi') || v.lang.includes('VI'); });
     var enVoices = voices.filter(function(v) { return v.lang.includes('en') || v.lang.includes('EN'); });
@@ -66,30 +73,18 @@ function populateVoiceList() {
     
     var sortedVoices = viVoices.concat(enVoices).concat(otherVoices);
     
-    if (sortedVoices.length === 0) {
-        var op = document.createElement('option');
-        op.textContent = 'Không có giọng đọc phù hợp';
-        op.value = '';
-        select.appendChild(op);
-        return;
-    }
-    
     sortedVoices.forEach(function(voice) {
         var option = document.createElement('option');
         option.textContent = voice.name + ' (' + voice.lang + ')';
         option.value = voice.lang;
         option.setAttribute('data-voice-name', voice.name);
-        
-        // Select Vietnamese voice by default if available
-        if (voice.lang.includes('vi') && !selectedValue) {
-            option.selected = true;
-        }
-        
         select.appendChild(option);
     });
     
     if (selectedValue) {
         select.value = selectedValue;
+    } else {
+        select.value = 'google-tts-vi';
     }
 }
 
@@ -154,14 +149,33 @@ function playStampSound(isAdd) {
 // TTS speak number
 function speakNumber(number) {
     var isEnabled = document.getElementById("voiceToggle").checked;
-    if (!isEnabled || typeof synth === 'undefined') return;
+    if (!isEnabled) return;
+    
+    var selectedVoiceLang = $("#voiceSelect").val();
+    
+    if (selectedVoiceLang === 'google-tts-vi') {
+        if (typeof synth !== 'undefined' && synth.speaking) {
+            synth.cancel();
+        }
+        
+        try {
+            var audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=" + encodeURIComponent(number.toString());
+            var audio = new Audio(audioUrl);
+            audio.playbackRate = parseFloat($("#voiceRate").val()) || 1.0;
+            audio.play();
+        } catch(e) {
+            console.log("Failed to play Google TTS: ", e);
+        }
+        return;
+    }
+    
+    if (typeof synth === 'undefined') return;
     
     if (synth.speaking) {
         synth.cancel();
     }
     
     var msg = new SpeechSynthesisUtterance(number.toString());
-    var selectedVoiceLang = $("#voiceSelect").val();
     
     if (selectedVoiceLang) {
         var selectedVoiceName = $("#voiceSelect option:selected").attr('data-voice-name');
@@ -173,6 +187,7 @@ function speakNumber(number) {
         }
         if (voice) {
             msg.voice = voice;
+            msg.lang = voice.lang;
         }
     }
     
