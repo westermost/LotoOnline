@@ -1,230 +1,372 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lô Tô Online</title>
+    <title>Lô Tô Online - Trải Nghiệm Đẳng Cấp</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
+        
+    <!-- Custom Style Sheet -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- App Script -->
     <script src="app.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Lô Tô Online</h1>
-        <div class="row">
-            <div class="col-sm">
-                Time Count Down
-                <input type="number" id="timeleft" value="8" />
-                <p id="numberLeft"></p>
-                <p id="numberhas"></p>
-            </div>
-            <div class="col-sm">
-                <input type="number" id="lownumber" value="1" />
-                and
-                <input type="number" id="highnumber" value="90" />
-            </div>
-            <div class="col-sm">
-                <div id="countdown"></div>
-            </div>
-        </div>
+    <div class="container-custom">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-logo">Lô Tô Online</h1>
+            <p class="app-subtitle">Hệ Thống Kêu Số Tự Động & Chuyên Nghiệp</p>
+        </header>
 
-        <div class="row">
-            <div class="col-sm">
-
-            </div>
-            <div class="col-sm">
-                <button id="getit" type="button" class="btn btn-success">Start!</button>
-            </div>
-            <div class="col-sm">
-                <button id="stopit" type="button" class="btn btn-danger" onclick="stopCountDown()">Stop!</button>
-                <button id="stopit" type="button" class="btn btn-warning" onclick="clearScreen()">Clear!</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm">
-
-        </div>
-        <div class="col-sm">
-            <p id="randomnumber"></p>
-        </div>
-        <div class="col-sm">
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm"></div>
-        <div class="col-sm">
-            <div id="result"></div>
-        </div>
-        <div class="col-sm"></div>
-    </div>
-
-   
-
-    <div style="margin-top: 10px;"></div>
-    <!-- Dò Số -->
-    <div class="row">
-        <div class="col-sm">
-            Số cần dò:
-            <input type="number" id="findNumber" oninput="checkNumber()" />
-        </div>
-        <div class="col-sm">
-            <div class="alert alert-success" role="alert" hidden>
-                <p id="textCheckNumber"></p>
-            </div>
-            <div class="alert alert-danger" role="alert" hidden>
-                <p id="textCheckNumberWrong"></p>
-            </div>
-        </div>
-        <div class="col-sm">
-            <p>Lì xì cho tác giả:</p>
-            <img src="donate.jpg" alt="" srcset="">
-        </div>
-    </div>
-
-
-    <!-- Bộ hình -->
-    <!-- <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="card-group">
-                <div class="card border-primary mb-3">
-                  <img class="card-img-top" src="image/1.jpg" >
-                  <div class="card-footer">
-                    <small class="text-muted">Tờ số 1</small>
-                  </div>
+        <!-- Main Dashboard -->
+        <div class="dashboard-grid">
+            
+            <!-- Left Side: Controls & Ball -->
+            <div class="panel-left">
+                <!-- Caller & Timer Ball -->
+                <div class="glass-card caller-display">
+                    <div class="bingo-ball-container">
+                        <!-- SVG Circular Progress -->
+                        <svg class="countdown-svg">
+                            <defs>
+                                <linearGradient id="ballGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3b82f6" />
+                                    <stop offset="50%" stop-color="#8b5cf6" />
+                                    <stop offset="100%" stop-color="#ec4899" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="countdown-circle-bg" cx="100" cy="100" r="96" />
+                            <circle id="countdownBar" class="countdown-circle-bar" cx="100" cy="100" r="96" />
+                        </svg>
+                        <!-- Physical Bingo Ball visual -->
+                        <div id="bingoBallVisual" class="bingo-ball empty">
+                            <div class="bingo-ball-inner">
+                                <span id="randomnumber">Sẵn sàng</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="countdown" class="timer-text">Nhấn Bắt Đầu để chơi</div>
                 </div>
-                <div class="card border-primary mb-3">
-                  <img class="card-img-top" src="image/2.jpg" >
-                  <div class="card-footer">
-                    <small class="text-muted">Tờ số 2</small>
-                  </div>
-                </div>
-                <div class="card border-primary mb-3">
-                  <img class="card-img-top" src="image/3.jpg" >
-                  <div class="card-footer">
-                    <small class="text-muted">Tờ số 3</small>
-                  </div>
-                </div>
-                <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/4.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 4</small>
-                    </div>
-                  </div>
-                  <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/5.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 5</small>
-                    </div>
-                  </div>
-                  <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/6.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 6</small>
-                    </div>
-                  </div>
-                  <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/7.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 7</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/8.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 8</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/9.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 9</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/10.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 10</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/11.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 11</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/12.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 12</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/13.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 13</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/14.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 14</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/15.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 15</small>
-                    </div>
-                  </div>
-                   <div class="card border-primary mb-3">
-                    <img class="card-img-top" src="image/16.jpg" >
-                    <div class="card-footer">
-                      <small class="text-muted">Tờ số 16</small>
-                    </div>
-                  </div>
-              </div>
-        </div>
-        <div class="col-sm-1"></div>
-    </div> -->
 
-    <div class="rowCustomize">
-        <div class="column">
-            <img src="image/1.jpg">
-            <img src="image/2.jpg">
-            <img src="image/3.jpg">
-            <img src="image/4.jpg">
+                <!-- Settings -->
+                <div class="glass-card">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Cài Đặt Trận Đấu</h3>
+                    <div class="setting-group">
+                        <div class="input-box">
+                            <label for="lownumber">Từ Số</label>
+                            <input type="number" id="lownumber" class="input-styled" value="1" min="1" max="99" />
+                        </div>
+                        <div class="input-box">
+                            <label for="highnumber">Đến Số</label>
+                            <input type="number" id="highnumber" class="input-styled" value="90" min="1" max="99" />
+                        </div>
+                    </div>
+                    
+                    <div class="input-box" style="margin-bottom: 15px;">
+                        <label for="timeleft">Tốc độ kêu (giây/số)</label>
+                        <input type="number" id="timeleft" class="input-styled" value="8" min="2" max="60" />
+                    </div>
+
+                    <!-- Game Controls Buttons -->
+                    <div class="controls-buttons">
+                        <button id="getit" type="button" class="btn-custom btn-start">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Bắt đầu Kêu!
+                        </button>
+                        <button id="stopit" type="button" class="btn-custom btn-stop hidden" onclick="stopCountDown()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                            Tạm Dừng
+                        </button>
+                        <button id="clearit" type="button" class="btn-custom btn-clear" onclick="clearScreen()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                            Làm Mới Game
+                        </button>
+                    </div>
+
+                    <!-- Voice Synthesis System -->
+                    <div class="voice-settings">
+                        <div class="toggle-container">
+                            <span>Giọng Nói Đọc Số</span>
+                            <label class="switch">
+                                <input type="checkbox" id="voiceToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="input-box" id="voiceSelectContainer">
+                            <label for="voiceSelect">Chọn Giọng Đọc</label>
+                            <select id="voiceSelect" class="select-styled">
+                                <option value="vi-VN">Đang tải giọng nói...</option>
+                            </select>
+                        </div>
+                        <div class="input-box" style="margin-top: 5px;">
+                            <label for="voiceRate">Tốc độ nói: <span id="rateVal" class="text-gold">1.0</span>x</label>
+                            <input type="range" id="voiceRate" min="0.5" max="1.5" step="0.1" value="1.0" style="width:100%; accent-color: var(--accent-purple);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Master Board & Checking -->
+            <div class="panel-right">
+                <!-- Master Board Panel -->
+                <div class="glass-card">
+                    <div class="board-header">
+                        <h2 class="board-title">Bảng Số Đã Kêu</h2>
+                        <div class="board-stats">
+                            <div class="stat-pill"><span id="numberhas">Đã kêu: 0</span></div>
+                            <div class="stat-pill"><span id="numberLeft">Còn lại: 90</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 1-90 Grid Board -->
+                    <div id="masterBoard" class="master-board">
+                        <!-- Dynamic cells 1-90 will be loaded here -->
+                    </div>
+
+                    <!-- Called history raw list (collapsible/scrollable) -->
+                    <div class="called-list-title" style="margin-top: 20px;">Nhật ký gọi số</div>
+                    <div class="called-list-container">
+                        <div id="result">Chưa có số nào được gọi.</div>
+                    </div>
+                </div>
+
+                <!-- Search Verify / Dò Số -->
+                <div class="glass-card">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Dò Số Nhanh</h3>
+                    <div class="search-container">
+                        <div class="search-wrapper">
+                            <input type="number" id="findNumber" class="input-styled search-input" placeholder="Nhập số cần dò..." oninput="checkNumber()" />
+                        </div>
+                        <div id="checkFeedback" class="check-feedback">
+                            <!-- Populated by JavaScript checkNumber() -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donate / Lì Xì -->
+                <div class="glass-card donate-box">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Lì Xì Cho Tác Giả</h3>
+                    <div class="donate-img-wrapper">
+                        <img src="donate.jpg" alt="Donate QR Code">
+                    </div>
+                    <p class="donate-text">Nếu bạn thấy ứng dụng thú vị, hãy ủng hộ cốc trà đá để tác giả duy trì server nhé! Cảm ơn bạn!</p>
+                </div>
+            </div>
+
         </div>
-        <div class="column">
-            <img src="image/5.jpg">
-            <img src="image/6.jpg">
-            <img src="image/7.jpg">
-            <img src="image/8.jpg">
-        </div>
-        <div class="column">
-            <img src="image/9.jpg">
-            <img src="image/10.jpg">
-            <img src="image/11.jpg">
-            <img src="image/12.jpg">
-        </div>
-        <div class="column">
-            <img src="image/13.jpg">
-            <img src="image/14.jpg">
-            <img src="image/15.jpg">
-            <img src="image/16.jpg">
+
+        <!-- Interactive Loto Cards Gallery Section -->
+        <section class="cards-section">
+            <div class="section-header">
+                <h2 class="section-title">Danh Sách Vé Số Lô Tô</h2>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Chọn vé và click "Dò Trên Máy" để đánh dấu số ngay trên màn hình.</p>
+            </div>
+            
+            <div class="cards-grid">
+                <!-- 16 Cards item generated dynamically to ensure flexibility & clean HTML -->
+                <!-- We will generate these beautifully using javascript for easier maintenance,
+                     or have them in static markup. Static lets users see it immediately. Let's make it static and beautiful. -->
+                
+                <!-- Generating 1 to 16 cards -->
+                <div class="loto-card-item" onclick="openCardModal(1)">
+                    <div class="card-img-wrapper">
+                        <img src="image/1.jpg" alt="Vé Lô Tô Số 1">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 1</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 1</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(2)">
+                    <div class="card-img-wrapper">
+                        <img src="image/2.jpg" alt="Vé Lô Tô Số 2">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 2</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 2</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(3)">
+                    <div class="card-img-wrapper">
+                        <img src="image/3.jpg" alt="Vé Lô Tô Số 3">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 3</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 3</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(4)">
+                    <div class="card-img-wrapper">
+                        <img src="image/4.jpg" alt="Vé Lô Tô Số 4">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 4</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 4</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(5)">
+                    <div class="card-img-wrapper">
+                        <img src="image/5.jpg" alt="Vé Lô Tô Số 5">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 5</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 5</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(6)">
+                    <div class="card-img-wrapper">
+                        <img src="image/6.jpg" alt="Vé Lô Tô Số 6">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 6</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 6</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(7)">
+                    <div class="card-img-wrapper">
+                        <img src="image/7.jpg" alt="Vé Lô Tô Số 7">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 7</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 7</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(8)">
+                    <div class="card-img-wrapper">
+                        <img src="image/8.jpg" alt="Vé Lô Tô Số 8">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 8</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 8</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(9)">
+                    <div class="card-img-wrapper">
+                        <img src="image/9.jpg" alt="Vé Lô Tô Số 9">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 9</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 9</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(10)">
+                    <div class="card-img-wrapper">
+                        <img src="image/10.jpg" alt="Vé Lô Tô Số 10">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 10</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 10</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(11)">
+                    <div class="card-img-wrapper">
+                        <img src="image/11.jpg" alt="Vé Lô Tô Số 11">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 11</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 11</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(12)">
+                    <div class="card-img-wrapper">
+                        <img src="image/12.jpg" alt="Vé Lô Tô Số 12">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 12</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 12</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(13)">
+                    <div class="card-img-wrapper">
+                        <img src="image/13.jpg" alt="Vé Lô Tô Số 13">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 13</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 13</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(14)">
+                    <div class="card-img-wrapper">
+                        <img src="image/14.jpg" alt="Vé Lô Tô Số 14">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 14</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 14</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(15)">
+                    <div class="card-img-wrapper">
+                        <img src="image/15.jpg" alt="Vé Lô Tô Số 15">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 15</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 15</div>
+                </div>
+
+                <div class="loto-card-item" onclick="openCardModal(16)">
+                    <div class="card-img-wrapper">
+                        <img src="image/16.jpg" alt="Vé Lô Tô Số 16">
+                        <div class="card-overlay">
+                            <button class="btn-card-action">Chơi Vé Số 16</button>
+                        </div>
+                    </div>
+                    <div class="card-info">Tờ số 16</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for card zoom & interactive stamping -->
+    <div id="cardModal" class="modal-custom">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h3 id="modalCardTitle" class="modal-title">Tờ số 1</h3>
+                <button class="btn-close-modal" onclick="closeCardModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-instructions">Click lên số trên vé để đặt dấu. Click lại để xóa dấu.</div>
+                
+                <div class="interactive-card-container" id="interactiveContainer">
+                    <img id="modalCardImg" src="image/1.jpg" alt="Chi tiết vé" class="interactive-card-img">
+                    <!-- Stamps will be injected here via JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-custom btn-clear" style="padding: 8px 16px; font-size: 0.85rem;" onclick="clearCurrentCardStamps()">
+                    Xóa tất cả dấu
+                </button>
+                <button type="button" class="btn-custom btn-start" style="padding: 8px 16px; font-size: 0.85rem;" onclick="closeCardModal()">
+                    Đóng lại
+                </button>
+            </div>
         </div>
     </div>
 
